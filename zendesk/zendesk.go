@@ -43,7 +43,7 @@ type Client interface {
 	ListTicketComments(int64) ([]TicketComment, error)
 	ListTicketFields() ([]TicketField, error)
 	ListTicketIncidents(int64) ([]Ticket, error)
-	ListUsers(*ListUsersOptions) ([]User, error)
+	ListUsers(*ListUsersOptions) (*ListUsersResult, error)
 	PermanentlyDeleteTicket(int64) (*JobStatus, error)
 	PermanentlyDeleteUser(int64) (*User, error)
 	RedactCommentString(int64, int64, string) (*TicketComment, error)

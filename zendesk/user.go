@@ -148,18 +148,24 @@ func (c *client) ListOrganizationUsers(id int64, opts *ListUsersOptions) ([]User
 	return out.Users, err
 }
 
+// ListUsersResult lalala
+type ListUsersResult struct {
+	Users []User `json:"users"`
+	Count int    `json:"count"`
+}
+
 // ListUsers list of all users.
 //
 // Zendesk Core API docs: https://developer.zendesk.com/rest_api/docs/core/users#list-users
-func (c *client) ListUsers(opts *ListUsersOptions) ([]User, error) {
+func (c *client) ListUsers(opts *ListUsersOptions) (*ListUsersResult, error) {
 	params, err := query.Values(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	out := new(APIPayload)
-	err = c.get(fmt.Sprintf("/api/v2/users.json?%s", params.Encode()), out)
-	return out.Users, err
+	var result ListUsersResult
+	err = c.get(fmt.Sprintf("/api/v2/users.json?%s", params.Encode()), &result)
+	return &result, err
 }
 
 // SearchUsers searches users by name or email address.
